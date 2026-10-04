@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Londji x 嘟力｜選拼圖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#e7e5e0; --bg-soft:#f1efea; --paper:#faf9f6;
+    --ink:#2b2a27; --ink-soft:#5a5750; --muted:#95918a;
+    --line:#d8d5cd; --line-strong:#b9b5ac;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+    letter-spacing:.02em;
+  }
+  h1,h2,h3,.serif{font-family:"Noto Serif TC","Georgia",serif}
+
+  /* ---------- Hero ---------- */
+  .hero{max-width:1040px;margin:0 auto;padding:56px 24px 40px}
+  .hero-text{text-align:center;max-width:560px;margin:0 auto 40px}
+  .eyebrow{
+    font-size:12px;letter-spacing:.32em;color:var(--muted);
+    text-transform:uppercase;margin:0 0 14px;
+  }
+  .hero-text h1{
+    font-size:30px;font-weight:600;line-height:1.5;margin:0 0 16px;color:var(--ink);
+  }
+  .hero-text p{font-size:14.5px;line-height:1.9;color:var(--ink-soft);margin:0}
+  .hero-rule{width:40px;height:1px;background:var(--line-strong);margin:24px auto 0}
+
+  .feature-img{margin-top:40px;border:1px solid var(--line)}
+  .feature-img img{width:100%;display:block;filter:grayscale(8%) contrast(1.02) brightness(.99)}
+  .feature-cap{text-align:center;font-size:12px;color:var(--muted);margin:10px 0 0;letter-spacing:.04em}
+
+  .about-block{max-width:560px;margin:56px auto 0;text-align:center}
+  .about-block .eyebrow{margin-bottom:14px}
+  .about-block p{font-size:13.5px;line-height:2;color:var(--ink-soft);margin:0}
+
+  .intro-rows{max-width:880px;margin:52px auto 0}
+  .intro-row{display:flex;align-items:center;gap:40px;margin:0 0 64px}
+  .intro-row.reverse{flex-direction:row-reverse}
+  .intro-row .intro-img{flex:1 1 50%;min-width:0;border:1px solid var(--line);overflow:hidden}
+  .intro-row .intro-img img{width:100%;display:block;filter:grayscale(20%) contrast(1.02);
+    transition:filter .4s ease, transform .6s ease}
+  .intro-row .intro-img:hover img{filter:grayscale(0%);transform:scale(1.02)}
+  .intro-row .intro-text{flex:1 1 50%;min-width:0}
+  .intro-text .idx{font-size:11px;letter-spacing:.3em;color:var(--muted);display:block;margin-bottom:10px}
+  .intro-text h3{font-size:19px;font-weight:600;margin:0 0 12px;line-height:1.5}
+  .intro-text p{font-size:13.5px;line-height:1.95;color:var(--ink-soft);margin:0}
+  @media(max-width:720px){
+    .intro-row, .intro-row.reverse{flex-direction:column;gap:18px;margin-bottom:44px}
+    .intro-row .intro-img, .intro-row .intro-text{flex:1 1 100%;width:100%}
+  }
+
+  .mini-label{text-align:center;font-size:12px;letter-spacing:.28em;color:var(--muted);
+    text-transform:uppercase;margin:0 0 16px}
+  .mini-grid{max-width:880px;margin:0 auto 56px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media(max-width:600px){.mini-grid{grid-template-columns:repeat(2,1fr)}}
+  .mini-grid figure{margin:0;border:1px solid var(--line);overflow:hidden}
+  .mini-grid img{width:100%;display:block;filter:grayscale(25%) contrast(1.02);
+    transition:filter .4s ease, transform .6s ease}
+  .mini-grid figure:hover img{filter:grayscale(0%);transform:scale(1.02)}
+
+  /* ---------- Quiz section ---------- */
+  .wrap{max-width:640px;margin:0 auto;padding:20px 24px 72px}
+  .section-label{
+    text-align:center;font-size:12px;letter-spacing:.28em;color:var(--muted);
+    text-transform:uppercase;margin:0 0 8px;
+  }
+  .section-title{text-align:center;font-size:20px;font-weight:600;margin:0 0 28px}
+
+  .steps{display:flex;justify-content:center;align-items:center;gap:10px;margin:0 0 32px}
+  .step-dot{
+    width:26px;height:26px;border-radius:50%;border:1px solid var(--line-strong);
+    color:var(--muted);background:var(--paper);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-family:"Noto Serif TC",serif;
+    transition:.25s;
+  }
+  .step-dot.active{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .step-dot.done{background:var(--ink-soft);border-color:var(--ink-soft);color:var(--paper)}
+  .step-line{width:28px;height:1px;background:var(--line)}
+
+  .panel{
+    background:var(--paper);border:1px solid var(--line);
+    padding:32px 26px;
+  }
+  .panel h2{font-size:17px;font-weight:600;margin:0 0 20px;text-align:center}
+
+  .options{display:grid;gap:10px}
+  .opt-age{grid-template-columns:1fr}
+  .opt-theme{grid-template-columns:repeat(2,1fr)}
+  .opt-portable{grid-template-columns:1fr}
+  @media(max-width:480px){.opt-theme{grid-template-columns:1fr}}
+
+  .opt{
+    border:1px solid var(--line); padding:14px 16px; cursor:pointer;
+    background:var(--bg-soft); text-align:left; font-size:14px; line-height:1.6;
+    transition:.15s;
+  }
+  .opt b{display:block;font-size:15px;font-weight:500;margin-bottom:2px;font-family:"Noto Serif TC",serif}
+  .opt small{color:var(--muted);font-size:12.5px}
+  .opt:hover{border-color:var(--line-strong)}
+  .opt.selected{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+  .opt.selected small{color:#cfccc4}
+  .opt-theme .opt{text-align:center;font-size:13.5px;padding:13px 8px}
+
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
+  button.nav-btn{
+    border:1px solid var(--line-strong);padding:10px 24px;font-size:13.5px;cursor:pointer;
+    background:transparent;color:var(--ink-soft);font-family:inherit;letter-spacing:.05em;
+  }
+  button.nav-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  button.nav-btn.primary:disabled{background:var(--line);border-color:var(--line);color:#a9a69f;cursor:not-allowed}
+  button.nav-btn:hover:not(:disabled){opacity:.78}
+
+  .hint{text-align:center;font-size:12px;color:var(--muted);margin-top:12px}
+
+  .results h2{margin-bottom:6px}
+  .result-note{text-align:center;color:var(--ink-soft);font-size:12.5px;margin:0 0 20px;line-height:1.7}
+  .result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(max-width:480px){.result-grid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);padding:16px;background:var(--bg-soft)}
+  .card b{display:block;font-size:14px;font-weight:500;margin-bottom:8px;line-height:1.5;font-family:"Noto Serif TC",serif}
+  .card .price{color:var(--ink);font-weight:600;font-size:13.5px;font-family:"Noto Serif TC",serif}
+  .card .tags{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:10.5px;border:1px solid var(--line-strong);color:var(--ink-soft);padding:2px 8px}
+  .tag.portable{border-color:var(--ink);color:var(--ink);font-weight:500}
+  .buy-link{display:inline-block;margin-top:12px;font-size:12.5px;color:var(--ink);
+    text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:1px}
+  .buy-link:hover{opacity:.7}
+  .empty{text-align:center;color:var(--muted);padding:30px 10px;font-size:13.5px}
+  .restart{display:block;margin:28px auto 0}
+
+  footer{text-align:center;padding:0 24px 56px;color:var(--muted);font-size:11.5px;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Londji × 嘟力</p>
+      <h1>選拼圖，<br>陪孩子找到專屬的玩樂時光</h1>
+      <p>跟著嘟力日記一起發現西班牙 LONDJI 的遊戲世界。回答三個小問題，為孩子的年齡、喜好與生活方式，找到最適合的一款拼圖。</p>
+      <div class="hero-rule"></div>
+    </div>
+
+    <figure class="feature-img">
+      <img src="puzzle-assets/photo-01.jpg" alt="孩子專注玩拼接道路拼圖">
+    </figure>
+    <p class="feature-cap">小小玩家的日常片刻 — 在地板上展開一條沒有終點的道路</p>
+
+    <div class="about-block">
+      <p class="eyebrow">About Londji</p>
+      <p>LONDJI 來自西班牙巴塞隆納，用插畫與紙製拼圖說故事，陪孩子在拼接的過程中練習觀察、思考與想像。嘟力精選最受台灣家庭喜愛的系列，從幼幼認知到情境式找找看，讓每一塊拼圖都成為一段專屬的玩樂時光。</p>
+    </div>
+
+    <div class="intro-rows">
+      <div class="intro-row">
+        <figure class="intro-img">
+          <img src="puzzle-assets/photo-03.jpg" alt="獨角獸找找看拼圖攤平在桌上">
+        </figure>
+        <div class="intro-text">
+          <span class="idx">01 — 找找看觀察力拼圖</span>
+          <h3>在圖畫裡尋找藏起來的細節</h3>
+          <p>每一張拼圖背後都是一個小故事，魔法世界、動物星球裡藏著等待孩子發現的角色與物件，邊拼邊玩也訓練觀察力與專注力。</p>
+        </div>
+      </div>
+
+      <div class="intro-row reverse">
+        <figure class="intro-img">
+          <img src="puzzle-assets/photo-10.jpg" alt="農場主題找找看拼圖與外盒">
+        </figure>
+        <div class="intro-text">
+          <span class="idx">02 — 情境故事拼圖</span>
+          <h3>像一本能親手拼出來的立體繪本</h3>
+          <p>從農場、城堡到小村莊，每一款情境拼圖都有完整的場景與角色設定，讓孩子在拼接之餘，也認識更廣闊的世界。</p>
+        </div>
+      </div>
+
+      <div class="intro-row">
+        <figure class="intro-img">
+          <img src="puzzle-assets/photo-07.jpg" alt="溫馨小屋造型拼圖與外盒">
+        </figure>
+        <div class="intro-text">
+          <span class="idx">03 — 造型小屋拼圖</span>
+          <h3>拼好以後，是房間裡的小裝飾</h3>
+          <p>特殊的外型設計讓拼圖不只是拼圖，完成後能直立展示，變成一間可以看見每個房間細節的娃娃屋。</p>
+        </div>
+      </div>
+
+      <div class="intro-row reverse">
+        <figure class="intro-img">
+          <img src="puzzle-assets/photo-09.jpg" alt="海洋生物造型拼圖">
+        </figure>
+        <div class="intro-text">
+          <span class="idx">04 — 異形認知拼圖</span>
+          <h3>順著動物的輪廓，練習小小的手</h3>
+          <p>大片數、動物造型邊框，是專為幼幼設計的拼圖款式，陪孩子練習抓握、配對與基礎的形狀認知。</p>
+        </div>
+      </div>
+
+      <div class="intro-row">
+        <figure class="intro-img">
+          <img src="puzzle-assets/photo-06.jpg" alt="小老鼠一家造型嵌入拼圖">
+        </figure>
+        <div class="intro-text">
+          <span class="idx">05 — 木製嵌入拼圖</span>
+          <h3>一塊一塊，練習手眼協調</h3>
+          <p>附木製把手的嵌入式設計，是許多孩子接觸拼圖的第一步，簡單的操作中累積專注力與成就感。</p>
+        </div>
+      </div>
+
+      <div class="intro-row reverse">
+        <figure class="intro-img">
+          <img src="puzzle-assets/photo-05.jpg" alt="孩子玩收納盒交通拼圖組">
+        </figure>
+        <div class="intro-text">
+          <span class="idx">06 — 隨身拼圖系列</span>
+          <h3>收進小盒子，帶著走的拼圖時光</h3>
+          <p>輕巧的收納設計，不管是出門旅行或等待的空檔，都能隨時展開一場小小的拼圖冒險。</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="mini-label">More Scenes</p>
+    <div class="mini-grid">
+      <figure><img src="puzzle-assets/photo-02.jpg" alt="獨角獸與花園拼圖外盒"></figure>
+      <figure><img src="puzzle-assets/photo-04.jpg" alt="孩子在陽光下玩圓形拼圖"></figure>
+      <figure><img src="puzzle-assets/photo-08.jpg" alt="小屋拼圖細節"></figure>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <p class="section-label">Puzzle Finder</p>
+    <h2 class="section-title serif">選拼圖小問卷</h2>
+
+    <div class="steps">
+      <div class="step-dot" data-step="1">1</div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="2">2</div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="3">3</div>
+    </div>
+
+    <div class="panel" id="panel"></div>
+  </div>
+
+  <footer>Londji × 嘟力日記　2026.09</footer>
+
+<script>
+const DATA = [
+  {n:"我的彩色鉛筆雙面拼圖-藍色", age:"幼幼", themes:["認知教育"], portable:false, price:1290},
+  {n:"我的彩色鉛筆雙面拼圖-黃色", age:"幼幼", themes:["認知教育"], portable:false, price:1290},
+  {n:"我的彩色鉛筆雙面拼圖-紅色", age:"幼幼", themes:["認知教育"], portable:false, price:1290},
+  {n:"嗡嗡小蜜蜂木製嵌入拼圖", age:"幼幼", themes:["動物/農場"], portable:false, price:1790},
+  {n:"我的小火車拼圖", age:"幼幼", themes:["交通載具"], portable:false, price:1690},
+  {n:"海洋生物拼圖", age:"幼幼", themes:["海洋/太空"], portable:false, price:1390},
+  {n:"媽媽抱抱我拼圖", age:"幼幼", themes:["家庭生活"], portable:false, price:1290},
+  {n:"我愛寵物拼圖", age:"幼幼", themes:["動物/農場"], portable:false, price:1290},
+  {n:"獨角獸生日快樂漸進式拼圖", age:"幼幼", themes:["奇幻/魔法","派對/慶典"], portable:false, price:1290},
+  {n:"母音字母拼圖", age:"幼幼", themes:["認知教育"], portable:false, price:1090},
+
+  {n:"趣山上雙面拼圖", age:"初階", themes:["自然風景/植物"], portable:false, price:990},
+  {n:"歡迎來我家雙面拼圖", age:"初階", themes:["家庭生活"], portable:false, price:950},
+  {n:"蘑菇屋雙面拼圖", age:"初階", themes:["建築/城堡"], portable:false, price:1390},
+  {n:"蘋果樹雙面拼圖", age:"初階", themes:["自然風景/植物"], portable:false, price:1390},
+  {n:"四季景色拼圖", age:"初階", themes:["自然風景/植物"], portable:false, price:1350},
+  {n:"叢林派對長型拼圖", age:"初階", themes:["動物/農場","派對/慶典"], portable:false, price:1390},
+  {n:"1-10數數動物拼圖", age:"初階", themes:["動物/農場","認知教育"], portable:false, price:1390},
+
+  {n:"魔法世界觀察尋寶拼圖", age:"找找看", themes:["奇幻/魔法"], portable:false, price:1690},
+  {n:"動物星球找找看拼圖", age:"找找看", themes:["動物/農場"], portable:false, price:1690},
+  {n:"歡樂農場找找看拼圖", age:"找找看", themes:["動物/農場"], portable:false, price:1390},
+  {n:"恐龍找找看隨身拼圖", age:"找找看", themes:["恐龍"], portable:true, price:490},
+  {n:"星球找找看隨身拼圖", age:"找找看", themes:["海洋/太空"], portable:true, price:490},
+  {n:"海底世界找找看隨身拼圖", age:"找找看", themes:["海洋/太空"], portable:true, price:490},
+  {n:"獨角獸找找看隨身拼圖", age:"找找看", themes:["奇幻/魔法"], portable:true, price:490},
+  {n:"花園找找看隨身拼圖", age:"找找看", themes:["自然風景/植物"], portable:true, price:490},
+  {n:"蘋果樹找找看隨身拼圖", age:"找找看", themes:["自然風景/植物"], portable:true, price:490},
+  {n:"城堡找找看拼圖", age:"找找看", themes:["建築/城堡","奇幻/魔法"], portable:false, price:890},
+  {n:"我的小叢林找找看拼圖", age:"找找看", themes:["動物/農場","自然風景/植物"], portable:false, price:890},
+  {n:"佩蒂特的旅程找找看拼圖", age:"找找看", themes:["家庭生活"], portable:false, price:950},
+  {n:"我的小恐龍找找看拼圖", age:"找找看", themes:["恐龍"], portable:false, price:890},
+  {n:"我的小農場找找看拼圖", age:"找找看", themes:["動物/農場"], portable:false, price:890},
+  {n:"兔子花園找找看拼圖", age:"找找看", themes:["動物/農場","自然風景/植物"], portable:false, price:1290},
+  {n:"熊熊森林找找看拼圖", age:"找找看", themes:["動物/農場","自然風景/植物"], portable:false, price:1290},
+  {n:"抬頭找找看拼圖", age:"找找看", themes:["自然風景/植物"], portable:false, price:1490},
+  {n:"小村莊故事找找看拼圖", age:"找找看", themes:["家庭生活","建築/城堡"], portable:false, price:1490},
+  {n:"發現世界找找看拼圖", age:"找找看", themes:["自然風景/植物"], portable:false, price:1490},
+  {n:"夢幻世界找找看拼圖", age:"找找看", themes:["奇幻/魔法"], portable:false, price:1490},
+  {n:"嗶嗶!車車造型找找看拼圖", age:"找找看", themes:["交通載具"], portable:false, price:1490},
+
+  {n:"神祕生日蛋糕拼圖&益智遊戲", age:"進階", themes:["派對/慶典"], portable:false, price:1690},
+  {n:"恐怖城堡夜光雙面拼圖", age:"進階", themes:["建築/城堡","奇幻/魔法"], portable:false, price:1490},
+  {n:"保護地球生物拼圖", age:"進階", themes:["動物/農場"], portable:false, price:1390},
+  {n:"恐龍探險家拼圖", age:"進階", themes:["恐龍"], portable:false, price:1430},
+  {n:"發現星球拼圖", age:"進階", themes:["海洋/太空"], portable:false, price:1490},
+  {n:"黑夜與白晝雙面拼圖", age:"進階", themes:["自然風景/植物","海洋/太空"], portable:false, price:1390},
+];
+
+const AGE_OPTIONS = [
+  {v:"幼幼", label:"幼幼拼圖", desc:"約 1.5–3 歲，木製嵌入 / 大片數少"},
+  {v:"初階", label:"初階拼圖", desc:"約 3–5 歲，雙面圖案，片數稍多"},
+  {v:"找找看", label:"找找看拼圖", desc:"約 4–7 歲，觀察力訓練，含隨身系列"},
+  {v:"進階", label:"進階拼圖", desc:"約 5–8 歲以上，50–350 片"},
+];
+
+const THEME_OPTIONS = [
+  "動物/農場","奇幻/魔法","恐龍","自然風景/植物",
+  "海洋/太空","交通載具","家庭生活","認知教育",
+  "建築/城堡","派對/慶典"
+];
+
+const PORTABLE_OPTIONS = [
+  {v:"會", label:"會，希望可以帶出門玩", desc:"只顯示「隨身」可攜帶款"},
+  {v:"不會", label:"不會，在家玩就好", desc:"不限制是否可攜帶"},
+  {v:"都可以", label:"都可以", desc:"不限制是否可攜帶"},
+];
+
+const SHOP_URL = "https://reurl.cc/eQnbRm";
+
+let state = { step:1, age:null, themes:[], portable:null };
+
+function renderDots(){
+  document.querySelectorAll(".step-dot").forEach(d=>{
+    const s = Number(d.dataset.step);
+    d.classList.toggle("active", s===state.step);
+    d.classList.toggle("done", s<state.step);
+  });
+}
+
+function render(){
+  renderDots();
+  const panel = document.getElementById("panel");
+  if(state.step===1) panel.innerHTML = stepAge();
+  else if(state.step===2) panel.innerHTML = stepTheme();
+  else if(state.step===3) panel.innerHTML = stepPortable();
+  else panel.innerHTML = stepResult();
+  bind();
+}
+
+function stepAge(){
+  return `
+    <h2>Q1. 孩子大概幾歲？</h2>
+    <div class="options opt-age">
+      ${AGE_OPTIONS.map(o=>`
+        <div class="opt ${state.age===o.v?'selected':''}" data-role="age" data-v="${o.v}">
+          <b>${o.label}</b><small>${o.desc}</small>
+        </div>`).join("")}
+    </div>
+    <div class="nav">
+      <span></span>
+      <button class="nav-btn primary" id="next" ${state.age?'':'disabled'}>下一步</button>
+    </div>`;
+}
+
+function stepTheme(){
+  return `
+    <h2>Q2. 喜歡什麼主題？（可複選，不選則不限）</h2>
+    <div class="options opt-theme">
+      ${THEME_OPTIONS.map(t=>`
+        <div class="opt ${state.themes.includes(t)?'selected':''}" data-role="theme" data-v="${t}">
+          ${t}
+        </div>`).join("")}
+    </div>
+    <div class="hint">不勾選任何主題＝不限主題</div>
+    <div class="nav">
+      <button class="nav-btn" id="back">上一步</button>
+      <button class="nav-btn primary" id="next">下一步</button>
+    </div>`;
+}
+
+function stepPortable(){
+  return `
+    <h2>Q3. 會把拼圖帶出門玩嗎？</h2>
+    <div class="options opt-portable">
+      ${PORTABLE_OPTIONS.map(o=>`
+        <div class="opt ${state.portable===o.v?'selected':''}" data-role="portable" data-v="${o.v}">
+          <b>${o.label}</b><small>${o.desc}</small>
+        </div>`).join("")}
+    </div>
+    <div class="nav">
+      <button class="nav-btn" id="back">上一步</button>
+      <button class="nav-btn primary" id="next" ${state.portable?'':'disabled'}>看結果</button>
+    </div>`;
+}
+
+function matchResults(){
+  let pool = DATA.filter(d=>d.age===state.age);
+  let note = "";
+
+  if(state.themes.length){
+    const themed = pool.filter(d=>d.themes.some(t=>state.themes.includes(t)));
+    if(themed.length) pool = themed;
+    else note = "此年齡層沒有符合所選主題的款式，改為顯示該年齡層全部拼圖：";
+  }
+
+  if(state.portable==="會"){
+    let port = pool.filter(d=>d.portable);
+    if(port.length){
+      pool = port;
+    } else {
+      let anyAgePort = DATA.filter(d=>d.portable && (!state.themes.length || d.themes.some(t=>state.themes.includes(t))));
+      if(anyAgePort.length){
+        pool = anyAgePort;
+        note = "此年齡層目前沒有隨身版，以下是符合主題的「隨身」系列（適用其他年齡）：";
+      } else {
+        pool = DATA.filter(d=>d.portable);
+        note = "沒有完全符合的隨身款，以下是全部隨身系列可供參考：";
+      }
+    }
+  }
+  return {pool, note};
+}
+
+function stepResult(){
+  const {pool, note} = matchResults();
+  return `
+    <h2>為你找到 ${pool.length} 款拼圖</h2>
+    ${note ? `<div class="result-note">${note}</div>` : ""}
+    ${pool.length ? `
+      <div class="result-grid">
+        ${pool.map(d=>`
+          <div class="card">
+            <b>${d.n}</b>
+            <div class="price">NT$${d.price}</div>
+            <div class="tags">
+              <span class="tag">${d.age}</span>
+              ${d.themes.map(t=>`<span class="tag">${t}</span>`).join("")}
+              ${d.portable ? `<span class="tag portable">可帶出門</span>` : ""}
+            </div>
+            <a class="buy-link" href="${SHOP_URL}" target="_blank" rel="noopener">前往購物頁選購 →</a>
+          </div>`).join("")}
+      </div>
+      <p class="hint">提醒：團購頁為單頁式商店，進去後請用頁面搜尋或捲動到對應分類找到這款拼圖。</p>
+    ` : `<div class="empty">目前沒有符合的款式，請試著調整條件再看看。</div>`}
+    <button class="nav-btn primary restart" id="restart">重新選一次</button>`;
+}
+
+function bind(){
+  document.querySelectorAll('[data-role="age"]').forEach(el=>{
+    el.onclick = ()=>{ state.age = el.dataset.v; render(); };
+  });
+  document.querySelectorAll('[data-role="theme"]').forEach(el=>{
+    el.onclick = ()=>{
+      const v = el.dataset.v;
+      const i = state.themes.indexOf(v);
+      if(i>-1) state.themes.splice(i,1); else state.themes.push(v);
+      render();
+    };
+  });
+  document.querySelectorAll('[data-role="portable"]').forEach(el=>{
+    el.onclick = ()=>{ state.portable = el.dataset.v; render(); };
+  });
+  const next = document.getElementById("next");
+  if(next) next.onclick = ()=>{ state.step++; render(); };
+  const back = document.getElementById("back");
+  if(back) back.onclick = ()=>{ state.step--; render(); };
+  const restart = document.getElementById("restart");
+  if(restart) restart.onclick = ()=>{ state = {step:1,age:null,themes:[],portable:null}; render(); };
+}
+
+render();
+</script>
+</body>
+</html>
