@@ -448,7 +448,7 @@ function stepResult(){
 
 function bind(){
   document.querySelectorAll('[data-role="age"]').forEach(el=>{
-    el.onclick = ()=>{ state.age = el.dataset.v; render(); };
+    el.onclick = ()=>{ state.age = el.dataset.v; state.step = 2; render(); };
   });
   document.querySelectorAll('[data-role="theme"]').forEach(el=>{
     el.onclick = ()=>{
@@ -459,7 +459,7 @@ function bind(){
     };
   });
   document.querySelectorAll('[data-role="portable"]').forEach(el=>{
-    el.onclick = ()=>{ state.portable = el.dataset.v; render(); };
+    el.onclick = ()=>{ state.portable = el.dataset.v; state.step = 4; render(); };
   });
   const next = document.getElementById("next");
   if(next) next.onclick = ()=>{ state.step++; render(); };
